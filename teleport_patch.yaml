@@ -1,0 +1,16 @@
+version: v3
+teleport:
+  nodename: HOSTNAME
+ssh_service:
+  labels:
+    owner: ALL
+  commands:
+  - name: hostname
+    command: [hostname]
+    period: 1m0s
+  - name: ipadd
+    command: ["/bin/sh", "-c", "hostname -I | tr ' ' '\n' | head -n1"]
+    period: 1m0s
+  - name: ostype
+    command: ["/bin/sh", "-c", "hostnamectl status | grep Operating | awk -F ': ' '{print $2}'"]
+    period: 1m0s
